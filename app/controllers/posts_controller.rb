@@ -20,6 +20,12 @@ class PostsController < ApplicationController
     redirect_to(post_path(@post))
   end
 
+  # Deletes post
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+    redirect_to posts_path
+  end
 
   # Using the data in out form for submission
   def create
