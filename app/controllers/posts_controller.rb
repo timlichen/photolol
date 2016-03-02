@@ -14,6 +14,11 @@ class PostsController < ApplicationController
     redirect_to posts_path
   end
 
+  # Show a single post
+  def show
+    @post = Post.find(params[:id])
+  end
+
   private
 
     # Here we define the exact data we want to accpet as the parameters.
