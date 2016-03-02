@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :set_post, only [:show, :edit, :update, :destroy]
 
   def index
     @posts = Post.all
@@ -10,32 +11,34 @@ class PostsController < ApplicationController
 
   # Controller to manage edit view
   def edit
-    @post = Post.find(params[:id])
   end
 
   # Controller that handle updating logic
   def update
-    @post = Post.find(params[:id])
-    @post.update(post_params)
-    redirect_to(post_path(@post))
+    if @post.update(post_params)
+      redirect_to(post_path(@post))
+    else
+      redirect_to posts_path
+    end
   end
 
   # Deletes post
   def destroy
-    @post = Post.find(params[:id])
     @post.destroy
     redirect_to posts_path
   end
 
   # Using the data in out form for submission
   def create
-    @post = Post.create(post_params)
-    redirect_to posts_path
+    if @post = Post.create(post_params)
+      redirect_to posts_path
+    else
+      render :new
+    end
   end
 
   # Show a single post
   def show
-    @post = Post.find(params[:id])
   end
 
   private
@@ -43,6 +46,10 @@ class PostsController < ApplicationController
     # Here we define the exact data we want to accpet as the parameters.
     def post_params
       params.require(:post).permit(:image, :caption)
+    end
+
+    def set_post
+      @post = Post.find(params[:id])
     end
 
 
