@@ -8,6 +8,19 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
+  # Controller to manage edit view
+  def edit
+    @post = Post.find(params[:id])
+  end
+
+  # Controller that handle updating logic
+  def update
+    @post = Post.find(params[:id])
+    @post.update(post_params)
+    redirect_to(post_path(@post))
+  end
+
+
   # Using the data in out form for submission
   def create
     @post = Post.create(post_params)
