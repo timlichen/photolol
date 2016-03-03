@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = Post.new
+    @post = current_user.posts.build
   end
 
   # Controller to manage edit view
@@ -33,7 +33,9 @@ class PostsController < ApplicationController
 
   # Using the data in out form for submission
   def create
-    if @post = Post.create(post_params)
+    @post = current_user.posts.build(post_params)
+
+    if @post.save
       flash[:success] = "You post has been created successfully."
       redirect_to posts_path
     else
