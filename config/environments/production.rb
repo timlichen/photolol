@@ -1,6 +1,23 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :stmp
+  host = 'https://safe-hollows-15411.herokuapp.com/'
+  config.action_mailer.default_url_options = { host: host}
+  ActionMailer::Base.smtp_settings = {
+    :address        => 'smtp.sendgrid.net',
+    :port           => '587',
+    :authentication => :plain,
+    :user_name      => ENV['SENDGRID_USERNAME'],
+    :password       => ENV['SENDGRID_PASSWORD'],
+    :domain         => 'heroku.com',
+    :enable_starttls_auto => true
+  }
+
+  # Seeting defualt url options for prod env
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 

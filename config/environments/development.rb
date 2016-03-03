@@ -41,4 +41,7 @@ Rails.application.configure do
 
   # Allowing paperclip to talk to imagemagick
   Paperclip.options[:command_path] = "usr/local/bin/convert"
+
+  # Seeting defualt url options for dev env
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
